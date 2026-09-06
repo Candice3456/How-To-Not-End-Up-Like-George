@@ -1,16 +1,19 @@
+import { useMemo } from 'react';
 import { useApp } from '../../context/AppContext';
 import { todayKey } from '../../utils/storage';
-import defaultTasks from '../../data/defaultTasks';
+import { generateTasks } from '../../data/defaultTasks';
 import './Tasks.css';
 
 export default function TasksPage() {
   const { state, dispatch } = useApp();
 
+  const tasks = useMemo(() => generateTasks(state.profile), [state.profile]);
+
   const today = todayKey();
   const completedIds =
     state.completedTasks.date === today ? state.completedTasks.ids : [];
 
-  const allDone = completedIds.length === defaultTasks.length;
+  const allDone = completedIds.length === tasks.length;
 
   function handleComplete(task) {
     if (completedIds.includes(task.id)) return;
@@ -22,7 +25,9 @@ export default function TasksPage() {
     <div className="tasks-page">
       <h2>Daily Tasks</h2>
       <p className="tasks-subtitle">
-        Complete these to stay healthy and earn coins!
+        {state.profile?.isAthletic
+          ? 'Tailored to your fitness level — let\'s get it!'
+          : 'Start easy and build up — you got this!'}
       </p>
 
       {allDone && (
@@ -32,7 +37,7 @@ export default function TasksPage() {
       )}
 
       <div className="tasks-list">
-        {defaultTasks.map((task) => {
+        {tasks.map((task) => {
           const done = completedIds.includes(task.id);
           return (
             <div key={task.id} className={`task-item ${done ? 'completed' : ''}`}>
@@ -57,11 +62,11 @@ export default function TasksPage() {
         <div className="progress-bar">
           <div
             className="progress-fill"
-            style={{ width: `${(completedIds.length / defaultTasks.length) * 100}%` }}
+            style={{ width: `${(completedIds.length / tasks.length) * 100}%` }}
           />
         </div>
         <span className="progress-label">
-          {completedIds.length} / {defaultTasks.length} done
+          {completedIds.length} / {tasks.length} done
         </span>
       </div>
     </div>

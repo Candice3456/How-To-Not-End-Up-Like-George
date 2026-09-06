@@ -119,6 +119,35 @@
   opacity: 0.9;
 }
 
+.field-hint {
+  font-size: 13px;
+  color: var(--text);
+  margin: -4px 0 16px;
+}
+
+.fitness-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.fitness-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.fitness-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-h);
+  margin-bottom: 6px;
+}
+
+.fitness-field .field-input {
+  margin-bottom: 0;
+}
+
 .back-link {
   margin-top: 16px;
   border: none;
