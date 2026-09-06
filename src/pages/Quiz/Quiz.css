@@ -1,3 +1,20 @@
+.welcome-banner {
+  margin-bottom: 20px;
+}
+
+.welcome-text {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-h);
+  margin: 0;
+}
+
+.welcome-sub {
+  font-size: 14px;
+  color: var(--text);
+  margin: 2px 0 0;
+}
+
 .quiz-home .section-header {
   display: flex;
   justify-content: space-between;
@@ -42,6 +59,17 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+}
+
+.form-title {
+  margin: 0 0 12px;
+  font-size: 17px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
 }
 
 /* List grid */

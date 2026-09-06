@@ -4,7 +4,8 @@
       "Bash(npm create:*)",
       "Bash(kill 10900)",
       "Bash(npm run:*)",
-      "Bash(gh repo:*)"
+      "Bash(gh repo:*)",
+      "Bash(gh auth:*)"
     ]
   }
 }

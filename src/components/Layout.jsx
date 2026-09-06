@@ -1,17 +1,23 @@
-import { NavLink, Outlet } from 'react-router-dom';
+import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import './Layout.css';
 
 export default function Layout() {
   const { state } = useApp();
+  const navigate = useNavigate();
 
   return (
     <div className="app-layout">
       <header className="app-header">
         <h1 className="app-title">Don't Be George</h1>
-        <div className="coin-display">
-          <span className="coin-icon">&#x1FA99;</span>
-          <span className="coin-count">{state.coins}</span>
+        <div className="header-right">
+          <div className="coin-display">
+            <span className="coin-icon">&#x1FA99;</span>
+            <span className="coin-count">{state.coins}</span>
+          </div>
+          <button className="profile-btn" onClick={() => navigate('/profile')}>
+            {state.profile?.name?.charAt(0)?.toUpperCase() || '?'}
+          </button>
         </div>
       </header>
 

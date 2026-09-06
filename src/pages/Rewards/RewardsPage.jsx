@@ -7,6 +7,7 @@ export default function RewardsPage() {
   const { state, dispatch } = useApp();
   const [tab, setTab] = useState('shop');
   const [justBought, setJustBought] = useState(null);
+  const [confirmReward, setConfirmReward] = useState(null);
 
   function handleBuy(reward) {
     if (state.coins < reward.cost) return;
@@ -19,9 +20,9 @@ export default function RewardsPage() {
       emoji: reward.emoji,
       category: reward.category,
       purchasedAt: new Date().toISOString(),
-      used: false,
     };
     dispatch({ type: 'ADD_TICKET', payload: ticket });
+    setConfirmReward(null);
     setJustBought(reward.name);
     setTimeout(() => setJustBought(null), 2000);
   }
@@ -57,6 +58,30 @@ export default function RewardsPage() {
         </div>
       )}
 
+      {/* Purchase confirmation modal */}
+      {confirmReward && (
+        <div className="modal-overlay" onClick={() => setConfirmReward(null)}>
+          <div className="modal" onClick={(e) => e.stopPropagation()}>
+            <span className="modal-emoji">{confirmReward.emoji}</span>
+            <h3>Buy {confirmReward.name}?</h3>
+            <p className="modal-cost">
+              This will cost <span className="coin-icon">&#x1FA99;</span> {confirmReward.cost} coins
+            </p>
+            <p className="modal-balance">
+              You'll have {state.coins - confirmReward.cost} coins left
+            </p>
+            <div className="modal-actions">
+              <button className="btn-secondary" onClick={() => setConfirmReward(null)}>
+                Cancel
+              </button>
+              <button className="btn-primary" onClick={() => handleBuy(confirmReward)}>
+                Confirm Purchase
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {tab === 'shop' && (
         <div className="shop">
           {categories.map((cat) => (
@@ -76,7 +101,7 @@ export default function RewardsPage() {
                         </span>
                         <button
                           className="btn-primary small"
-                          onClick={() => handleBuy(reward)}
+                          onClick={() => setConfirmReward(reward)}
                           disabled={!canAfford}
                         >
                           {canAfford ? 'Buy' : 'Need more coins'}

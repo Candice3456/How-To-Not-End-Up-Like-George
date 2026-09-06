@@ -26,6 +26,12 @@
   letter-spacing: -0.5px;
 }
 
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .coin-display {
   display: flex;
   align-items: center;
@@ -36,6 +42,21 @@
   font-weight: 600;
   font-size: 16px;
   color: var(--accent);
+}
+
+.profile-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  background: var(--accent-bg);
+  color: var(--accent);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .coin-icon {
