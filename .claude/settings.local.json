@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npm create:*)"
+      "Bash(npm create:*)",
+      "Bash(kill 10900)",
+      "Bash(npm run:*)"
     ]
   }
 }

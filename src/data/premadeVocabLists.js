@@ -1,0 +1,58 @@
+const premadeLists = [
+  {
+    id: 'premade-spanish-basics',
+    name: 'Spanish Basics',
+    description: 'Common Spanish words and phrases',
+    isPremade: true,
+    terms: [
+      { term: 'Hola', definition: 'Hello' },
+      { term: 'Gracias', definition: 'Thank you' },
+      { term: 'Por favor', definition: 'Please' },
+      { term: 'Buenos dias', definition: 'Good morning' },
+      { term: 'Buenas noches', definition: 'Good night' },
+      { term: 'Amigo', definition: 'Friend' },
+      { term: 'Agua', definition: 'Water' },
+      { term: 'Comida', definition: 'Food' },
+      { term: 'Casa', definition: 'House' },
+      { term: 'Libro', definition: 'Book' },
+    ],
+  },
+  {
+    id: 'premade-sat-vocab',
+    name: 'SAT Vocabulary',
+    description: 'High-frequency SAT words',
+    isPremade: true,
+    terms: [
+      { term: 'Ambiguous', definition: 'Open to more than one interpretation' },
+      { term: 'Benevolent', definition: 'Well-meaning and kindly' },
+      { term: 'Candid', definition: 'Truthful and straightforward' },
+      { term: 'Diligent', definition: 'Having or showing care in work' },
+      { term: 'Eloquent', definition: 'Fluent or persuasive in speaking' },
+      { term: 'Frugal', definition: 'Sparing or economical with money' },
+      { term: 'Gregarious', definition: 'Fond of company; sociable' },
+      { term: 'Hypothesis', definition: 'A proposed explanation for something' },
+      { term: 'Inevitable', definition: 'Certain to happen; unavoidable' },
+      { term: 'Juxtapose', definition: 'Place close together for contrast' },
+    ],
+  },
+  {
+    id: 'premade-science-terms',
+    name: 'Science Terms',
+    description: 'Key science vocabulary for students',
+    isPremade: true,
+    terms: [
+      { term: 'Photosynthesis', definition: 'Process by which plants convert sunlight to energy' },
+      { term: 'Mitosis', definition: 'Cell division producing two identical daughter cells' },
+      { term: 'Atom', definition: 'Smallest unit of a chemical element' },
+      { term: 'Molecule', definition: 'Two or more atoms bonded together' },
+      { term: 'Ecosystem', definition: 'Community of living organisms and their environment' },
+      { term: 'Gravity', definition: 'Force that attracts objects toward each other' },
+      { term: 'Velocity', definition: 'Speed of something in a given direction' },
+      { term: 'Osmosis', definition: 'Movement of water through a semipermeable membrane' },
+      { term: 'Hypothesis', definition: 'A testable prediction or educated guess' },
+      { term: 'Catalyst', definition: 'Substance that speeds up a chemical reaction' },
+    ],
+  },
+];
+
+export default premadeLists;
