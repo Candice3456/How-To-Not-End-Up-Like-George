@@ -9,12 +9,32 @@ export default function Onboarding() {
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
   const [isStudent, setIsStudent] = useState(null);
-  const [isAthletic, setIsAthletic] = useState(null);
+  // 'regular' | 'moderate' | 'none'
+  const [fitnessTier, setFitnessTier] = useState(null);
   const [fitness, setFitness] = useState({ pushups: '', situps: '', squats: '', pullups: '' });
   const [bedtime, setBedtime] = useState('22:00');
+  const [wakeTime, setWakeTime] = useState('07:00');
+  // Array of equipment ids; empty means bodyweight only.
+  const [equipment, setEquipment] = useState([]);
 
-  // Steps: 0=name/email, 1=student, 2=athletic, 3=fitness (only if athletic), 4=bedtime
-  const totalSteps = isAthletic ? 5 : 4;
+  // Anyone who works out at all gets the fitness numbers step.
+  const isAthletic = fitnessTier !== null && fitnessTier !== 'none';
+
+  // Named steps so we can insert/skip without renumbering everything.
+  const steps = [
+    'account',
+    'student',
+    'tier',
+    ...(isAthletic ? ['fitness'] : []),
+    'equipment',
+    'sleep',
+  ];
+  const stepKey = steps[step];
+  const totalSteps = steps.length;
+
+  function goNext() {
+    setStep(Math.min(step + 1, totalSteps - 1));
+  }
 
   function validateEmail(value) {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -28,23 +48,21 @@ export default function Onboarding() {
       return;
     }
     setEmailError('');
-    setStep(1);
-  }
-
-  function handleAthleticNext() {
-    if (isAthletic) {
-      setStep(3); // go to fitness questions
-    } else {
-      setStep(4); // skip to bedtime
-    }
+    goNext();
   }
 
   function handleBack() {
-    if (step === 4 && !isAthletic) {
-      setStep(2); // skip back over fitness step
-    } else {
-      setStep(step - 1);
+    setStep(Math.max(step - 1, 0));
+  }
+
+  function toggleEquipment(id) {
+    if (id === 'none') {
+      setEquipment([]);
+      return;
     }
+    setEquipment(
+      equipment.includes(id) ? equipment.filter((e) => e !== id) : [...equipment, id]
+    );
   }
 
   function handleSubmit() {
@@ -64,21 +82,17 @@ export default function Onboarding() {
         email: email.trim(),
         isStudent,
         isAthletic,
+        fitnessTier,
         fitnessLevel,
+        equipment,
         bedtime,
+        wakeTime,
       },
     });
   }
 
   function dotSteps() {
-    // Show correct number of dots based on path
     return Array.from({ length: totalSteps }, (_, i) => i);
-  }
-
-  function currentDotIndex() {
-    if (step <= 2) return step;
-    if (step === 3) return 3; // fitness step (athletic only)
-    return isAthletic ? 4 : 3; // bedtime
   }
 
   return (
@@ -91,11 +105,11 @@ export default function Onboarding() {
 
         <div className="step-dots">
           {dotSteps().map((s) => (
-            <span key={s} className={`dot ${currentDotIndex() >= s ? 'active' : ''}`} />
+            <span key={s} className={`dot ${step >= s ? 'active' : ''}`} />
           ))}
         </div>
 
-        {step === 0 && (
+        {stepKey === 'account' && (
           <div className="step-content">
             <label className="field-label">What's your name?</label>
             <input
@@ -130,7 +144,7 @@ export default function Onboarding() {
           </div>
         )}
 
-        {step === 1 && (
+        {stepKey === 'student' && (
           <div className="step-content">
             <label className="field-label">Are you a student?</label>
             <div className="choice-row">
@@ -151,7 +165,7 @@ export default function Onboarding() {
             </div>
             <button
               className="submit-btn"
-              onClick={() => setStep(2)}
+              onClick={goNext}
               disabled={isStudent === null}
             >
               Next
@@ -159,36 +173,37 @@ export default function Onboarding() {
           </div>
         )}
 
-        {step === 2 && (
+        {stepKey === 'tier' && (
           <div className="step-content">
-            <label className="field-label">Are you athletic?</label>
-            <div className="choice-row">
-              <button
-                type="button"
-                className={`choice-btn ${isAthletic === true ? 'selected' : ''}`}
-                onClick={() => setIsAthletic(true)}
-              >
-                Yeah, I work out
-              </button>
-              <button
-                type="button"
-                className={`choice-btn ${isAthletic === false ? 'selected' : ''}`}
-                onClick={() => setIsAthletic(false)}
-              >
-                Not really
-              </button>
+            <label className="field-label">How often do you work out?</label>
+            <div className="choice-row stacked">
+              {[
+                { value: 'regular', label: 'Regularly', hint: 'Several times a week' },
+                { value: 'moderate', label: 'Kind of / sometimes', hint: 'On and off, when I feel like it' },
+                { value: 'none', label: 'Not really', hint: 'Start me off easy' },
+              ].map((opt) => (
+                <button
+                  key={opt.value}
+                  type="button"
+                  className={`choice-btn ${fitnessTier === opt.value ? 'selected' : ''}`}
+                  onClick={() => setFitnessTier(opt.value)}
+                >
+                  <span className="choice-label">{opt.label}</span>
+                  <span className="choice-hint">{opt.hint}</span>
+                </button>
+              ))}
             </div>
             <button
               className="submit-btn"
-              onClick={handleAthleticNext}
-              disabled={isAthletic === null}
+              onClick={goNext}
+              disabled={fitnessTier === null}
             >
               Next
             </button>
           </div>
         )}
 
-        {step === 3 && (
+        {stepKey === 'fitness' && (
           <div className="step-content">
             <label className="field-label">How many can you do in one set?</label>
             <p className="field-hint">Rough numbers are fine — this helps us tailor your tasks.</p>
@@ -240,21 +255,68 @@ export default function Onboarding() {
               </div>
             </div>
 
-            <button className="submit-btn" onClick={() => setStep(4)}>
+            <button className="submit-btn" onClick={goNext}>
               Next
             </button>
           </div>
         )}
 
-        {step === 4 && (
+        {stepKey === 'equipment' && (
           <div className="step-content">
-            <label className="field-label">When do you usually go to sleep?</label>
-            <input
-              type="time"
-              className="field-input time-input"
-              value={bedtime}
-              onChange={(e) => setBedtime(e.target.value)}
-            />
+            <label className="field-label">Got any equipment at home?</label>
+            <p className="field-hint">Pick everything you have. We'll only give you exercises you can actually do.</p>
+            <div className="choice-row stacked">
+              {[
+                { id: 'pullup-bar', label: 'Pull-up bar', emoji: '\uD83E\uDD38' },
+                { id: 'weights', label: 'Dumbbells / weights', emoji: '\uD83C\uDFCB\uFE0F' },
+                { id: 'bands', label: 'Resistance bands', emoji: '\uD83E\uDE80' },
+              ].map((opt) => (
+                <button
+                  key={opt.id}
+                  type="button"
+                  className={`choice-btn ${equipment.includes(opt.id) ? 'selected' : ''}`}
+                  onClick={() => toggleEquipment(opt.id)}
+                >
+                  <span className="choice-label">{opt.emoji} {opt.label}</span>
+                </button>
+              ))}
+              <button
+                type="button"
+                className={`choice-btn ${equipment.length === 0 ? 'selected' : ''}`}
+                onClick={() => toggleEquipment('none')}
+              >
+                <span className="choice-label">Nothing, just me</span>
+              </button>
+            </div>
+            <button className="submit-btn" onClick={goNext}>
+              Next
+            </button>
+          </div>
+        )}
+
+        {stepKey === 'sleep' && (
+          <div className="step-content">
+            <label className="field-label">What's your sleep schedule?</label>
+            <div className="time-row">
+              <div className="time-field">
+                <span className="fitness-label">Bedtime</span>
+                <input
+                  type="time"
+                  className="field-input time-input"
+                  value={bedtime}
+                  onChange={(e) => setBedtime(e.target.value)}
+                />
+              </div>
+              <div className="time-field">
+                <span className="fitness-label">Wake up</span>
+                <input
+                  type="time"
+                  className="field-input time-input"
+                  value={wakeTime}
+                  onChange={(e) => setWakeTime(e.target.value)}
+                />
+              </div>
+            </div>
             <button className="submit-btn" onClick={handleSubmit}>
               Let's Go!
             </button>

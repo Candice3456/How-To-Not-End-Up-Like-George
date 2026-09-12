@@ -7,7 +7,7 @@ import FlashcardMode from './pages/Quiz/FlashcardMode';
 import MultipleChoice from './pages/Quiz/MultipleChoice';
 import TasksPage from './pages/Tasks/TasksPage';
 import SchedulePage from './pages/Schedule/SchedulePage';
-import RewardsPage from './pages/Rewards/RewardsPage';
+import PetPage from './pages/Pet/PetPage';
 import ProfilePage from './pages/Profile/ProfilePage';
 
 function AppRoutes() {
@@ -25,7 +25,7 @@ function AppRoutes() {
         <Route path="/quiz/multiple-choice/:listId" element={<MultipleChoice />} />
         <Route path="/tasks" element={<TasksPage />} />
         <Route path="/schedule" element={<SchedulePage />} />
-        <Route path="/rewards" element={<RewardsPage />} />
+        <Route path="/pet" element={<PetPage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="*" element={<Navigate to="/quiz" replace />} />
       </Route>

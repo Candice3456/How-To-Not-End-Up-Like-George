@@ -1,0 +1,164 @@
+.pet-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.pet-stage {
+  position: relative;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent-bg);
+  margin: 8px 0 12px;
+  transition: background 0.4s;
+}
+
+.pet-stage.hungry { background: rgba(245, 158, 11, 0.15); }
+.pet-stage.starving,
+.pet-stage.empty { background: rgba(220, 38, 38, 0.15); }
+
+.pet-emoji {
+  font-size: 88px;
+  line-height: 1;
+}
+
+.pet-stage.happy .pet-emoji { animation: bounce 1.6s ease-in-out infinite; }
+.pet-stage.starving .pet-emoji,
+.pet-stage.empty .pet-emoji { filter: grayscale(0.7); animation: shiver 0.4s ease-in-out infinite; }
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes shiver {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(3px); }
+}
+
+.pet-face {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  font-size: 32px;
+  background: var(--bg);
+  border-radius: 50%;
+  padding: 4px;
+  line-height: 1;
+}
+
+.pet-name {
+  margin: 0;
+  font-size: 24px;
+}
+
+.pet-line {
+  margin: 4px 0 20px;
+  color: var(--text);
+  font-size: 14px;
+}
+
+.hunger {
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.hunger-head {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.hunger-label.happy { color: #16a34a; }
+.hunger-label.fine { color: var(--accent); }
+.hunger-label.hungry { color: #d97706; }
+.hunger-label.starving,
+.hunger-label.empty { color: #dc2626; }
+
+.progress-fill.hungry { background: #f59e0b; }
+.progress-fill.starving,
+.progress-fill.empty { background: #dc2626; }
+
+.feed-title {
+  align-self: flex-start;
+  margin: 0 0 10px;
+  font-size: 16px;
+}
+
+.food-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  width: 100%;
+}
+
+.food-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 14px 8px;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg);
+  color: var(--text-h);
+  cursor: pointer;
+  transition: border-color 0.2s, transform 0.1s;
+}
+
+.food-card:hover:not(:disabled) { border-color: var(--accent); }
+.food-card:active:not(:disabled) { transform: scale(0.96); }
+.food-card:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.food-emoji { font-size: 30px; }
+.food-name { font-weight: 700; font-size: 14px; }
+.food-fill { font-size: 12px; color: #16a34a; font-weight: 600; }
+.food-cost { font-size: 12px; color: var(--accent); font-weight: 600; }
+
+.pet-note {
+  margin-top: 14px;
+  font-size: 13px;
+  color: var(--text);
+}
+
+/* Adoption screen */
+.choose-pet h2 { margin: 0 0 4px; }
+
+.pet-choices {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.pet-choice {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 18px;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg);
+  color: var(--text-h);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.pet-choice.selected {
+  border-color: var(--accent);
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+
+.pet-choice-emoji { font-size: 44px; }
+
+.choose-pet .btn-primary { width: 100%; }

@@ -4,7 +4,12 @@ const KEYS = {
   VOCAB_LISTS: 'george_vocab_lists',
   COMPLETED_TASKS: 'george_completed_tasks',
   COMPLETED_SCHEDULE: 'george_completed_schedule',
-  OWNED_TICKETS: 'george_owned_tickets',
+  PET: 'george_pet',
+  QUIZ_REWARDS: 'george_quiz_rewards',
+  SCHEDULE_HISTORY: 'george_schedule_history',
+  LAST_ROAST_DATE: 'george_last_roast_date',
+  XP: 'george_xp',
+  CHEAT_STRIKES: 'george_cheat_strikes',
   LAST_TASK_DATE: 'george_last_task_date',
   LAST_SCHEDULE_DATE: 'george_last_schedule_date',
 };

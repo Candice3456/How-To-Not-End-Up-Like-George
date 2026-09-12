@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useApp } from '../../context/AppContext';
 import premadeLists from '../../data/premadeVocabLists';
+import { todayKey } from '../../utils/storage';
 import './Quiz.css';
 
 export default function QuizHome() {
@@ -13,6 +14,8 @@ export default function QuizHome() {
   const [formTerms, setFormTerms] = useState([{ term: '', definition: '' }]);
 
   const allLists = [...premadeLists, ...state.vocabLists];
+  const claimedToday =
+    state.quizRewards.date === todayKey() ? state.quizRewards.listIds : [];
 
   function resetForm() {
     setFormName('');
@@ -168,6 +171,9 @@ export default function QuizHome() {
             <div className="list-card-header">
               <h3>{list.name}</h3>
               {list.isPremade && <span className="badge">Built-in</span>}
+              {claimedToday.includes(list.id) && (
+                <span className="badge earned">Earned today</span>
+              )}
             </div>
             <p className="list-desc">
               {list.terms.length} terms

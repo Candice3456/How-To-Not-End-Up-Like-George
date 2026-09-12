@@ -1,24 +1,22 @@
 import { useState } from 'react';
 import { useApp } from '../../context/AppContext';
+import { formatTime } from '../../utils/time';
+import { GeorgePopup } from '../../components/GeorgeRoast';
+import { georgeRoasts, georgePhotos } from '../../data/georgeRoasts';
+import { levelInfo } from '../../utils/xp';
+import { currentHunger, moodFor, petChoices } from '../../data/pets';
 import './Profile.css';
 
 export default function ProfilePage() {
-  const { state, dispatch } = useApp();
+  const { state } = useApp();
   const [showReset, setShowReset] = useState(false);
+  const [previewGeorge, setPreviewGeorge] = useState(false);
   const profile = state.profile;
+  const lvl = levelInfo(state.xp);
 
   function handleReset() {
     localStorage.clear();
     window.location.reload();
-  }
-
-  function formatBedtime(time) {
-    if (!time) return 'Not set';
-    const [h, m] = time.split(':');
-    const hour = parseInt(h);
-    const ampm = hour >= 12 ? 'PM' : 'AM';
-    const display = hour > 12 ? hour - 12 : hour === 0 ? 12 : hour;
-    return `${display}:${m} ${ampm}`;
   }
 
   return (
@@ -39,8 +37,16 @@ export default function ProfilePage() {
           <span className="stat-label">Coins</span>
         </div>
         <div className="stat-item">
-          <span className="stat-value">{state.ownedTickets.length}</span>
-          <span className="stat-label">Tickets</span>
+          <span className="stat-value">Lv {lvl.level}</span>
+          <span className="stat-label">{lvl.into.toLocaleString()} / {lvl.needed.toLocaleString()} XP</span>
+        </div>
+        <div className="stat-item">
+          <span className="stat-value">
+            {state.pet ? petChoices.find((p) => p.id === state.pet.type)?.emoji : '\uD83E\uDD5A'}
+          </span>
+          <span className="stat-label">
+            {state.pet ? `${state.pet.name} · ${moodFor(currentHunger(state.pet)).label}` : 'No pet yet'}
+          </span>
         </div>
         <div className="stat-item">
           <span className="stat-value">{state.vocabLists.length}</span>
@@ -55,7 +61,10 @@ export default function ProfilePage() {
         </div>
         <div className="detail-row">
           <span className="detail-label">Athletic</span>
-          <span className="detail-value">{profile.isAthletic ? 'Yes' : 'No'}</span>
+          <span className="detail-value">
+            {{ regular: 'Works out regularly', moderate: 'Works out sometimes', none: 'Not really' }[profile.fitnessTier]
+              ?? (profile.isAthletic ? 'Yes' : 'No')}
+          </span>
         </div>
         {profile.isAthletic && profile.fitnessLevel && (
           <>
@@ -78,10 +87,36 @@ export default function ProfilePage() {
           </>
         )}
         <div className="detail-row">
+          <span className="detail-label">Equipment</span>
+          <span className="detail-value">
+            {profile.equipment?.length
+              ? profile.equipment
+                  .map((e) => ({ 'pullup-bar': 'Pull-up bar', weights: 'Weights', bands: 'Bands' }[e]))
+                  .join(', ')
+              : 'None'}
+          </span>
+        </div>
+        <div className="detail-row">
           <span className="detail-label">Bedtime</span>
-          <span className="detail-value">{formatBedtime(profile.bedtime)}</span>
+          <span className="detail-value">{formatTime(profile.bedtime)}</span>
+        </div>
+        <div className="detail-row">
+          <span className="detail-label">Wake up</span>
+          <span className="detail-value">{formatTime(profile.wakeTime)}</span>
         </div>
       </div>
+
+      {previewGeorge && (
+        <GeorgePopup
+          roast={georgeRoasts[Math.floor(Math.random() * georgeRoasts.length)]}
+          photo={georgePhotos.length ? georgePhotos[0] : null}
+          onClose={() => setPreviewGeorge(false)}
+        />
+      )}
+
+      <button className="btn-secondary preview-george" onClick={() => setPreviewGeorge(true)}>
+        Preview a George roast
+      </button>
 
       <div className="profile-danger">
         {!showReset ? (

@@ -366,3 +366,14 @@
   padding: 6px 14px;
   font-size: 13px;
 }
+
+.coins-note {
+  color: var(--text);
+  font-size: 14px;
+  margin: 8px 0 20px;
+}
+
+.badge.earned {
+  background: var(--accent-bg);
+  color: var(--accent);
+}

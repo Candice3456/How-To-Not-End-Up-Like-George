@@ -16,10 +16,10 @@ export default function FlashcardMode() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [flipped, setFlipped] = useState(false);
 
-  if (!list) {
+  if (!list || list.terms.length === 0) {
     return (
       <div className="quiz-message">
-        <p>List not found.</p>
+        <p>{list ? 'This list has no terms yet.' : 'List not found.'}</p>
         <button className="btn-primary" onClick={() => navigate('/quiz')}>Back</button>
       </div>
     );

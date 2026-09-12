@@ -110,3 +110,30 @@
 .nav-item.active .nav-label {
   font-weight: 700;
 }
+
+.level-badge {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 52px;
+}
+
+.level-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-h);
+  text-align: center;
+}
+
+.level-bar {
+  height: 5px;
+  border-radius: 3px;
+  background: var(--border);
+  overflow: hidden;
+}
+
+.level-fill {
+  height: 100%;
+  background: var(--accent);
+  transition: width 0.3s;
+}

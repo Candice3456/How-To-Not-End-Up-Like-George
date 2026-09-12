@@ -71,3 +71,49 @@
   color: var(--accent);
   font-weight: 600;
 }
+
+.schedule-section-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 16px;
+  margin: 20px 0 10px;
+}
+
+.extras-count {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+
+.extras-count.met {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.schedule-group {
+  margin-bottom: 12px;
+}
+
+.schedule-period {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.schedule-hint {
+  font-size: 12px;
+  color: var(--text);
+}
+
+.schedule-window {
+  color: var(--text);
+  font-weight: 500;
+}

@@ -11,46 +11,46 @@ You earn coins for everything — finishing a quiz, doing push-ups, checking off
 ## Core Features (MVP Checklist)
 
 ### Onboarding / Login
-- [ ] Email input with real validation (must be a valid email format)
-- [ ] Name, student yes/no, athletic yes/no, bedtime question
-- [ ] If athletic: ask how many push-ups, sit-ups, squats, pull-ups they can do
-- [ ] If not athletic: skip fitness questions (gets beginner progressions automatically)
-- [ ] Profile saved locally
+- [x] Email input with real validation (must be a valid email format)
+- [x] Name, student yes/no, athletic yes/no, bedtime question
+- [x] If athletic: ask how many push-ups, sit-ups, squats, pull-ups they can do
+- [x] If not athletic: skip fitness questions (gets beginner progressions automatically)
+- [x] Profile saved locally
 
 ### Quiz
-- [ ] Create your own vocab lists (term + definition pairs)
-- [ ] Edit and delete custom lists
-- [ ] 3 pre-made lists included (Spanish, SAT, Science)
-- [ ] Flashcard mode (tap to flip)
-- [ ] Multiple choice quiz mode (4 options)
-- [ ] Score screen with coins earned (up to 30 per quiz)
+- [x] Create your own vocab lists (term + definition pairs)
+- [x] Edit and delete custom lists
+- [x] 3 pre-made lists included (Spanish, SAT, Science)
+- [x] Flashcard mode (tap to flip)
+- [x] Multiple choice quiz mode (4 options)
+- [x] Score screen with coins earned (up to 30 per quiz)
 
 ### Tasks
-- [ ] Personalized exercise tasks based on fitness assessment:
+- [x] Personalized exercise tasks based on fitness assessment:
   - Athletic: uses their actual numbers to set challenging-but-doable targets (e.g. if they can do 20 push-ups, task might be "Do 15 strict push-ups")
   - Not athletic: beginner progressions (knee push-ups, wall push-ups, assisted squats, dead hangs instead of pull-ups)
-- [ ] Non-exercise health tasks too (drink water, eat fruit, stretch)
-- [ ] Daily reset — tasks refresh every day
-- [ ] Check off to complete, earn 10-15 coins each
-- [ ] Progress bar showing how many done
+- [x] Non-exercise health tasks too (drink water, eat fruit, stretch)
+- [x] Daily reset — tasks refresh every day
+- [x] Check off to complete, earn 10-15 coins each
+- [x] Progress bar showing how many done
 
 ### Daily Schedule
-- [ ] Ordered morning/daily routine (brush teeth, wash face, eat breakfast…)
-- [ ] Context-aware: homework tasks only show for students on weekends
-- [ ] Check off items, earn 5-20 coins each
-- [ ] Progress bar
+- [x] Ordered morning/daily routine (brush teeth, wash face, eat breakfast…)
+- [x] Context-aware: homework tasks only show for students on weekends
+- [x] Check off items, earn 5-20 coins each
+- [x] Progress bar
 
 ### Currency & Rewards
-- [ ] Coin balance shown in header at all times
-- [ ] Earn coins from quizzes, tasks, and schedule
-- [ ] Rewards shop with tickets to buy (gaming time, dessert, free time, movie night, sleep-in)
-- [ ] "My Tickets" tab to view and use purchased tickets
+- [x] Coin balance shown in header at all times
+- [x] Earn coins from quizzes, tasks, and schedule
+- [x] Rewards shop with tickets to buy (gaming time, dessert, free time, movie night, sleep-in)
+- [x] "My Tickets" tab to view and use purchased tickets
 
 ### App Shell
-- [ ] Bottom tab navigation: Quiz, Tasks, Schedule, Rewards
-- [ ] Header with app name + coin count
-- [ ] Mobile-first layout (max 480px centered)
-- [ ] Dark mode support (auto, follows system)
+- [x] Bottom tab navigation: Quiz, Tasks, Schedule, Rewards
+- [x] Header with app name + coin count
+- [x] Mobile-first layout (max 480px centered)
+- [x] Dark mode support (auto, follows system)
 
 ## Screens
 
