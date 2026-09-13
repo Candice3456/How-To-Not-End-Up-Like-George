@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useApp } from '../../context/AppContext';
 import { todayKey } from '../../utils/storage';
 import { GeorgePopup } from '../../components/GeorgeRoast';
-import { georgePhotos, quizZeroRoasts, quizZeroQuestion } from '../../data/georgeRoasts';
+import { georgePhotos, quizZeroRoasts, quizZeroQuestion, quizRoastTiers, quizTierFor } from '../../data/georgeRoasts';
 import premadeLists from '../../data/premadeVocabLists';
 import './Quiz.css';
 
@@ -54,6 +54,8 @@ export default function MultipleChoice() {
   // Whether this round actually paid out (false on same-day replays).
   const [rewarded, setRewarded] = useState(false);
   const [showZeroRoast, setShowZeroRoast] = useState(false);
+  // Graded roast for weak-but-nonzero scores: { tier, line } or null.
+  const [gradedRoast, setGradedRoast] = useState(null);
 
   const alreadyClaimedToday =
     state.quizRewards.date === todayKey() &&
@@ -93,8 +95,19 @@ export default function MultipleChoice() {
       } else {
         setRewarded(false);
       }
-      // A flat zero earns a visit from George.
-      if (score === 0) setShowZeroRoast(true);
+      // A flat zero earns a visit from George; weak scores get a graded one.
+      if (score === 0) {
+        setShowZeroRoast(true);
+      } else {
+        const tier = quizTierFor(score, questions.length);
+        if (tier) {
+          const lines = quizRoastTiers[tier].lines;
+          const line = lines[Math.floor(Math.random() * lines.length)]
+            .replaceAll('{score}', score)
+            .replaceAll('{total}', questions.length);
+          setGradedRoast({ tier, line });
+        }
+      }
       setFinished(true);
     }
   }
@@ -110,6 +123,15 @@ export default function MultipleChoice() {
             question={quizZeroQuestion}
             closeLabel="...no. Let me try again."
             onClose={() => setShowZeroRoast(false)}
+          />
+        )}
+        {gradedRoast && (
+          <GeorgePopup
+            roast={gradedRoast.line}
+            photo={georgePhotos.length ? georgePhotos[Math.floor(Math.random() * georgePhotos.length)] : null}
+            question={quizRoastTiers[gradedRoast.tier].question}
+            closeLabel={quizRoastTiers[gradedRoast.tier].closeLabel}
+            onClose={() => setGradedRoast(null)}
           />
         )}
         <h2>{score === 0 ? 'Oof.' : 'Quiz Complete!'}</h2>
@@ -140,6 +162,7 @@ export default function MultipleChoice() {
               setFinished(false);
               setRewarded(false);
               setShowZeroRoast(false);
+              setGradedRoast(null);
               setRound(round + 1);
             }}
           >

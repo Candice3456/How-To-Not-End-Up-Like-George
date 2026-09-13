@@ -29,6 +29,48 @@ export const quizZeroRoasts = [
 
 export const quizZeroQuestion = 'Is this really the path you want to go down?';
 
+// Graded quiz roasts by score. PLACEHOLDER LINES — swap in the real ones.
+// {score} and {total} are filled in.
+export const quizRoastTiers = {
+  // 50-79%: "do better"
+  light: {
+    question: 'Do better.',
+    closeLabel: 'Fine. I will.',
+    lines: [
+      '{score} out of {total}. Not George-level, but George can see you from where he is sitting.',
+      'Half-right is half-wrong. George is fully wrong, so you are ahead, barely.',
+    ],
+  },
+  // 30-49%: regular
+  regular: {
+    question: 'Do you really want to end up like this guy??',
+    closeLabel: 'No. Let me try again.',
+    lines: [
+      '{score} out of {total}. George just nodded approvingly. Be very worried.',
+      'You got {score} right. George got zero things right this month. You are closing the gap.',
+    ],
+  },
+  // 1-29%: mega
+  mega: {
+    question: 'Is this really the path you want to go down?',
+    closeLabel: '...I need to study.',
+    lines: [
+      '{score} out of {total}. That is not a score, that is a rounding error. George is saving you a seat.',
+      'You guessed your way to {score}. A coin flip would have done better. George flips coins for a living.',
+    ],
+  },
+};
+
+/** Picks a roast tier from a score, or null when the score is respectable. */
+export function quizTierFor(score, total) {
+  if (total === 0 || score === 0) return null; // zero has its own roast
+  const pct = score / total;
+  if (pct >= 0.8) return null;
+  if (pct >= 0.5) return 'light';
+  if (pct >= 0.3) return 'regular';
+  return 'mega';
+}
+
 // Shown when someone checks off a schedule item at a blatantly wrong time of
 // day. {item} and {time} are filled in with the offending item and the clock.
 export const cheatRoasts = [
